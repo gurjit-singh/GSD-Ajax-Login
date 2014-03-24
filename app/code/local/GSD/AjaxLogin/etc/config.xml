@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <GSD_AjaxLogin>
+            <version>1.0.1</version>
+        </GSD_AjaxLogin>
+    </modules>
+	
+	<global>
+		<blocks>
+			<ajaxlogin><class>GSD_AjaxLogin_Block</class></ajaxlogin>
+		</blocks>
+		<helpers>
+			<ajaxlogin><class>GSD_AjaxLogin_Helper</class></ajaxlogin>
+		</helpers>
+	</global>
+	
+	<frontend>
+		<routers>
+			<ajaxlogin>
+                <use>standard</use>
+                <args>
+                    <module>GSD_AjaxLogin</module>
+                    <frontName>ajaxlogin</frontName>
+                </args>
+            </ajaxlogin>
+		</routers>
+		<layout>
+			<updates>
+				<ajaxlogin>
+					<file>ajaxlogin.xml</file>
+				</ajaxlogin>
+			</updates>
+		</layout>
+	</frontend>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <GSD_AjaxLogin>
+                    <files>
+                        <default>GSD_AjaxLogin.csv</default>
+                    </files>
+                </GSD_AjaxLogin>
+            </modules>
+        </translate>
+    </adminhtml>
+
+	<default>
+		<ajaxlogin>
+			<basic_options>
+				<active>1</active>
+			</basic_options>
+		</ajaxlogin>
+	</default>
+</config>

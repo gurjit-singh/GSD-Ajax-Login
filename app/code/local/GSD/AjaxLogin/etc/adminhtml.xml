@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config>	
+	<acl>
+        <resources>
+            <admin>
+                <children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<ajaxlogin translate="title">
+										<title>Ajax Login</title>
+										<sort_order>40</sort_order>
+									</ajaxlogin>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+        </resources>
+    </acl>
+</config>

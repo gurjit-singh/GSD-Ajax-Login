@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <GSD_AjaxLogin>
+            <active>true</active>
+            <codePool>local</codePool>
+        </GSD_AjaxLogin>
+    </modules>
+</config>
