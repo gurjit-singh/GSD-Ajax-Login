@@ -1,0 +1,26 @@
+#dullDiv {background: none repeat scroll 0 0 #000000;border: 0.0625em solid #114EAB;display: none;height: 100%;left: 0;opacity: 0.4;position: fixed;top: 0;width: 100%;z-index: 1;}
+li.main_li { background:none !important; border:none !important; }
+li.main_li ul li { background:none !important; border:none !important; }
+li.main_li a { padding-bottom:10px; }
+
+ul.popup { position:fixed; z-index:999999; display:none; width:300px; padding:15px; margin-left:-180px; margin-top:-100px; background:#fff; box-shadow:1px 1px 4px 4px #ccc; }
+ul.popup li, div.login-form { float:left; width:285px; }
+li.main_li:hover > ul { display:block; }
+
+#ajaxlogin_form {}
+#ajaxlogin_form ul.form-list {}
+
+#ajaxlogin_form ul.form-list li { float:left; display:block; width:55%; border:none; background:none; clear:both; }
+#ajaxlogin_form ul.form-list li a.ajaxlogin_forgot_pwd_actions, #ajaxlogin_form ul.form-list li a.ajaxlogin_actions { color:#E76200; margin-right:5px; font-weight:bold; }
+#ajaxlogin_form ul.form-list li.buttons { float:left; }
+
+#ajaxlogin_form ul.form-list div.input-box { width:200px; }
+#ajaxlogin_form ul.form-list div.input-box .validation-advice { text-align:left; }
+#ajaxlogin_form ul.form-list div.input-box input.input-text { width:100%; }
+
+.ajax_login_loader { background:url(../images/loader.gif) no-repeat center center transparent; float:left; height:22px; width:16px; }
+
+#ajaxlogin_close_icon { float:right; width:20px; height:20px; background:url(../images/icon-close.png) no-repeat; cursor:pointer; }
+#ajaxlogin_close_icon:hover {}
+
+#ajaxlogin_form_message { text-align:left; }

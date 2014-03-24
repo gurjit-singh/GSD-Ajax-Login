@@ -1,0 +1,144 @@
+	<li class="main_li"><a class="" title="" href="javascript:;" onClick="openLogin()"><?php echo $this->__("Log In") ?></a>
+	<div id="dullDiv"></div>
+	<ul id="loginPopupDiv" class="popup">
+		<li>	
+			<div class="login-form">
+				<div id="ajaxlogin_close_icon" onclick="AjaxLoginForm.hideLoginContainer()">&nbsp;</div>
+				<div id="ajaxlogin_form_message"></div>
+					<form id="ajaxlogin_form" action="<?php echo $this->getUrl('ajaxlogin/index/loginPost') ?>" method="post">
+						<ul class="form-list">
+							<li class="wide">
+								<label class="required" for="billing:email"><em>*</em><?php echo $this->__('Email Address') ?></label>
+								<div class="input-box">
+									<input type="text" autocomplete="off" class="input-text required-entry validate-email" value="" id="login:email" name="login[username]" title="<?php echo $this->__('Email Address') ?>">
+								</div>
+							</li>
+							<li class="wide" id="ajaxlogin_form_pwd">
+								<label class="required" for="billing:password"><em>*</em><?php echo $this->__('Password') ?></label>
+								<div class="input-box">
+									<input type="password" autocomplete="off" class="input-text required-entry validate-password" value="" id="login:password" name="login[password]" title="<?php echo $this->__('Password') ?>" />
+								</div>
+							</li>
+							<li class="buttons ajaxlogin_actions">
+								<button id="ajaxlogin_button_send" name="ajaxlogin_button_send" title="<?php echo $this->__('Login') ?>" class="button ajaxlogin_button ajaxlogin_actions" type="button" onclick="AjaxLoginForm.submit(this)"><span><span><?php echo $this->__("Login") ?></span></span></button>
+								<a id="ajaxlogin_forgot_pwd_link" class="ajaxlogin_actions" href="javascript:AjaxLoginForm.showForgotPwdForm('ajaxlogin_form_pwd', 'ajaxlogin_is_forgot_pwd')"><?php echo $this->__('Forgot Password') ?></a>
+							</li>
+							<li class="buttons ajaxlogin_forgot_pwd_actions" style="display:none;">
+								<button id="ajaxlogin_button_forgot_pwd" name="ajaxlogin_button_forgot_pwd" title="<?php echo $this->__("Forgot Password") ?>" class="button ajaxlogin_button ajaxlogin_forgot_pwd_actions" type="button" onclick="AjaxLoginForm.submit(this)"><span><span><?php echo $this->__("Forgot Password") ?></span></span></button>
+								<a id="ajaxlogin_link" class="ajaxlogin_forgot_pwd_actions" 
+								href="javascript:AjaxLoginForm.showLoginForm('ajaxlogin_form_pwd', 'ajaxlogin_is_forgot_pwd')"><?php echo $this->__('Login') ?></a>
+								
+							</li>
+						</ul>
+						<input type="hidden" name="ajaxlogin_is_forgot_pwd" id="ajaxlogin_is_forgot_pwd" value="0" />
+					</form>
+				</div>
+			</li>
+		</ul>
+	</li>
+		
+		<script type="text/javascript">		
+			var AjaxLoginForm = new VarienForm("ajaxlogin_form");
+			AjaxLoginForm.submit = function(button){
+				if (this.validator.validate()) {
+					// show ajax image
+					// button.insert({"after":osc_ajax_loading_small});
+					AjaxLoginForm.hideLoader();
+					AjaxLoginForm.insertLoader(button);
+					
+					$("ajaxlogin_form").request({
+						onSuccess: function(transport) {
+							var json = transport.responseText.evalJSON();
+							
+							if(json.is_forgot_pwd){
+								if(json.success){
+									$("ajaxlogin_form_message").update("<span style='color:green;font-weight:bold'>"+json.success_message+"</span>");
+									$("ajaxlogin_form_message").show();
+								}
+								if(json.error){
+									$("ajaxlogin_form_message").update("<span style='color:red;font-weight:bold'>"+json.error_message+"</span>");
+									$("ajaxlogin_form_message").show();
+								}
+							}else{							
+								if(json.success){
+									window.location.reload();
+								}
+								if(json.error){
+									$("ajaxlogin_form_message").update("<span style='color:red;font-weight:bold'>"+json.error_message+"</span>");
+									$("ajaxlogin_form_message").show();
+								}
+							}
+							AjaxLoginForm.hideLoader();
+							setTimeout("AjaxLoginForm.hideResponseMessage()", 5000);
+						}
+					});
+					
+				}
+			}.bind(AjaxLoginForm);
+			
+			AjaxLoginLoader = "<div class='ajax_login_loader'>&nbsp;</div>";
+			AjaxLoginForm.insertLoader = function(element){
+				// show ajax image
+				element.insert({"after":AjaxLoginLoader});
+			}
+			
+			AjaxLoginForm.hideLoader = function(){
+				$$(".ajax_login_loader").each(function(elem){
+					elem.remove();
+				});
+			}
+			
+			AjaxLoginForm.showForgotPwdForm = function(pwdFieldId, forgotPwdFlagFieldId){
+				$(pwdFieldId).toggle( "blind" );
+				$(forgotPwdFlagFieldId).value = 1;
+				
+				$$("li.ajaxlogin_forgot_pwd_actions").each(function(elem){
+					elem.toggle( "blind" );
+				});
+				
+				$$("li.ajaxlogin_actions").each(function(elem){
+					elem.toggle( "blind" );
+				});
+			}
+			
+			AjaxLoginForm.showLoginForm = function(pwdFieldId, forgotPwdFlagFieldId){
+				$(pwdFieldId).toggle( "blind" );
+				$(forgotPwdFlagFieldId).value = 0;
+				
+				$$("li.ajaxlogin_actions").each(function(elem){
+					elem.toggle( "blind" );
+				});
+				
+				$$("li.ajaxlogin_forgot_pwd_actions").each(function(elem){
+					elem.toggle( "blind" );
+				});
+			}
+			AjaxLoginForm.hideLoginContainer = function(){
+				$$('ul.popup').each(function(containerEl){
+					containerEl.style.display = "none";
+					document.getElementById("dullDiv").style.display = "none";
+				});
+			}
+
+			AjaxLoginForm.hideResponseMessage = function(){
+				$('ajaxlogin_form_message').toggle( "blind" );
+				setTimeout("$('ajaxlogin_form_message').innerHTML = '';", 3000);
+			}
+			$$('ul.popup').each(function(containerEl){
+				containerEl.style.display = "none";
+			});
+	
+		function openLogin(){
+			document.getElementById("dullDiv").style.display = "block";
+			setDivPosition('loginPopupDiv');
+		}
+		function setDivPosition(divId){  // USED TO SET POSITION OF DIV
+			var DivShowed = document.getElementById(divId)
+			var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop
+			var myHeight = window.innerHeight ? window.innerHeight : (document.documentElement.clientHeight ? document.documentElement.clientHeight : (document.body.clientHeight ? document.body.clientHeight : 0))
+			var clientWid = document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth;
+			DivShowed.style.left = ((clientWid-DivShowed.offsetWidth)/2)+'px'; 
+			DivShowed.style.top = ((parseInt(myHeight) - DivShowed.offsetHeight)/2)+'px';
+			document.getElementById(divId).style.display = "block";
+		}
+	</script>

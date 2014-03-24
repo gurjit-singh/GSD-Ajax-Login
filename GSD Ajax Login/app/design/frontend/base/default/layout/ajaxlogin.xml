@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	
+	<default>
+		<reference name="head">
+			<action ifconfig="ajaxlogin/basic_options/active" method="addCss"><stylesheet>css/ajaxlogin.css</stylesheet></action>
+		</reference>
+    </default>
+	
+	<customer_logged_out>
+		<reference name="top.links">
+            <action ifconfig="ajaxlogin/basic_options/active" method="removeLinkByUrl"><url helper="customer/getLoginUrl"/></action>
+			<block type="ajaxlogin/login" name="ajaxlogin_login"/>
+			<action ifconfig="ajaxlogin/basic_options/active" method="addLinkBlock"><blockName>ajaxlogin_login</blockName></action>
+        </reference>
+	</customer_logged_out>
+</layout>
